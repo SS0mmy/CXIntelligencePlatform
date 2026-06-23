@@ -1,0 +1,455 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.dash{font-family:var(--font-sans);}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:0;}
+.logo{font-size:13px;font-weight:500;color:var(--color-text-primary);}
+.logo span{color:#1568C8;}
+.co-badge{background:#EBF4FC;color:#002467;font-size:11px;padding:3px 10px;border-radius:4px;font-weight:500;}
+.tabs{display:flex;gap:0;border-bottom:0.5px solid var(--color-border-tertiary);padding:0 12px;overflow-x:auto;}
+.tab{padding:8px 12px;font-size:11px;cursor:pointer;border-bottom:2px solid transparent;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;}
+.tab.active{border-bottom-color:#1568C8;color:#1568C8;font-weight:500;}
+.panel{display:none;padding:14px 16px;}
+.panel.active{display:block;}
+.mrow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;}
+.ml{font-size:10px;color:var(--color-text-secondary);margin-bottom:3px;}
+.mv{font-size:20px;font-weight:500;color:var(--color-text-primary);}
+.ms{font-size:10px;margin-top:2px;}
+.up{color:#1568C8;}.dn{color:#D85A30;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;}
+.ct{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:10px;display:flex;align-items:center;gap:5px;}
+.sl{font-size:10px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px;padding-bottom:5px;border-bottom:0.5px solid var(--color-border-tertiary);}
+.dr{display:flex;align-items:center;gap:6px;margin-bottom:7px;}
+.dn2{font-size:10px;color:var(--color-text-primary);width:80px;flex-shrink:0;}
+.db{flex:1;height:5px;background:var(--color-background-secondary);border-radius:3px;}
+.df{height:5px;border-radius:3px;}
+.dv{font-size:10px;font-weight:500;width:24px;text-align:right;color:var(--color-text-primary);}
+.sr{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);}
+.sr:last-child{border-bottom:none;}
+.sbh{font-size:10px;padding:2px 7px;border-radius:3px;font-weight:500;}
+.bh{background:#FCEBEB;color:#A32D2D;}.bm{background:#FAEEDA;color:#854F0B;}.bl{background:#EAF3DE;color:#3B6D11;}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);}
+.rr:last-child{border-bottom:none;}
+.rl{font-size:10px;color:var(--color-text-secondary);}
+.rv{font-size:12px;font-weight:500;color:var(--color-text-primary);}
+.rh{color:#1568C8;}
+.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.slider-label{font-size:11px;color:var(--color-text-secondary);width:110px;flex-shrink:0;}
+.slider-val{font-size:11px;font-weight:500;width:30px;text-align:right;color:var(--color-text-primary);}
+.result-big{font-size:28px;font-weight:500;color:#1568C8;}
+.result-label{font-size:10px;color:var(--color-text-secondary);margin-bottom:2px;}
+.chat-wrap{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:10px;min-height:220px;margin-bottom:10px;}
+.chat-msg{margin-bottom:8px;}
+.chat-ai{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 12px;font-size:11px;color:var(--color-text-primary);line-height:1.6;max-width:90%;}
+.chat-user{background:#EBF4FC;border-radius:var(--border-radius-md);padding:8px 12px;font-size:11px;color:#0C447C;max-width:85%;margin-left:auto;}
+.chat-sender{font-size:10px;color:var(--color-text-secondary);margin-bottom:3px;}
+.chat-input-row{display:flex;gap:8px;}
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.chip{font-size:10px;padding:4px 10px;border:0.5px solid var(--color-border-secondary);border-radius:20px;cursor:pointer;color:var(--color-text-secondary);background:var(--color-background-primary);}
+.chip:hover{background:var(--color-background-secondary);}
+.report-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
+.report-info{display:flex;align-items:center;gap:10px;}
+.report-icon{width:32px;height:32px;background:#EBF4FC;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;color:#1568C8;font-size:16px;}
+.report-title{font-size:11px;font-weight:500;color:var(--color-text-primary);}
+.report-sub{font-size:10px;color:var(--color-text-secondary);margin-top:2px;}
+.dl-btn{font-size:10px;padding:4px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-secondary);background:var(--color-background-primary);}
+.new-badge{font-size:9px;background:#EBF4FC;color:#185FA5;padding:2px 6px;border-radius:3px;font-weight:500;}
+.alert-r{display:flex;align-items:flex-start;gap:7px;padding:7px 9px;border-radius:var(--border-radius-md);margin-bottom:7px;}
+.alert-hi{background:#FCEBEB;border:0.5px solid #F7C1C1;}
+.alert-mi{background:#FAEEDA;border:0.5px solid #FAC775;}
+</style>
+
+<h2 class="sr-only">CX Intelligence Platform 대시보드 — 홈, 드라이버 분석, 이탈 위험, 경영진 요약, ROI 시뮬레이터, 자동 리포트, AI 질의응답 탭 포함</h2>
+
+<div class="dash">
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="logo"><span>CX</span> Intelligence Platform</div>
+    <div class="co-badge">삼성전자 / 가전 업종</div>
+  </div>
+  <div style="font-size:10px;color:var(--color-text-secondary);">2024년 기준 · 업데이트 2025.01</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="sw('home')"><i class="ti ti-home" aria-hidden="true"></i> 홈</div>
+  <div class="tab" onclick="sw('driver')"><i class="ti ti-chart-bar" aria-hidden="true"></i> 드라이버</div>
+  <div class="tab" onclick="sw('seg')"><i class="ti ti-users" aria-hidden="true"></i> 이탈 위험</div>
+  <div class="tab" onclick="sw('exec')"><i class="ti ti-briefcase" aria-hidden="true"></i> 경영진 요약</div>
+  <div class="tab" onclick="sw('roi')"><i class="ti ti-calculator" aria-hidden="true"></i> ROI 시뮬</div>
+  <div class="tab" onclick="sw('report')"><i class="ti ti-file-text" aria-hidden="true"></i> 자동 리포트</div>
+  <div class="tab" onclick="sw('ai')"><i class="ti ti-message-circle" aria-hidden="true"></i> AI 질의</div>
+</div>
+
+<!-- HOME -->
+<div class="panel active" id="tab-home">
+  <div class="mrow">
+    <div class="mc"><div class="ml">KCSI 전반 만족도</div><div class="mv">78.4</div><div class="ms up">▲ 1.2점 전년 대비</div></div>
+    <div class="mc"><div class="ml">KNPS 추천 의향</div><div class="mv">72.1</div><div class="ms dn">▼ 0.8점 전년 대비</div></div>
+    <div class="mc"><div class="ml">업종 내 순위</div><div class="mv">3위</div><div class="ms" style="color:var(--color-text-secondary);">/ 12개 기업 중</div></div>
+    <div class="mc"><div class="ml">이탈 위험 고객</div><div class="mv" style="color:#D85A30;">18%</div><div class="ms dn">▲ 3%p 증가</div></div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="ct"><i class="ti ti-chart-line" aria-hidden="true"></i> KCSI × KNPS 추이</div>
+      <div style="position:relative;height:140px;"><canvas id="c1" role="img" aria-label="2020~2024 KCSI KNPS 추이">KCSI 74→78, KNPS 71→72</canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct"><i class="ti ti-building" aria-hidden="true"></i> 경쟁사 포지셔닝</div>
+      <div style="position:relative;height:140px;"><canvas id="c2" role="img" aria-label="KCSI 대 KNPS 버블차트">자사 78.4/72.1, 경쟁사A 80/74</canvas></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct"><i class="ti ti-bell" aria-hidden="true"></i> 주요 알림</div>
+    <div class="alert-r alert-hi"><i class="ti ti-alert-triangle" style="color:#A32D2D;font-size:14px;margin-top:1px;" aria-hidden="true"></i><div style="font-size:11px;color:var(--color-text-primary);line-height:1.5;"><span style="font-weight:500;">이탈 위험 상승</span> — KCSI·KNPS·KSQI 3개 동시 하락 패턴 감지. 40대 남성·수도권 세그먼트 집중 모니터링 필요</div></div>
+    <div class="alert-r alert-mi"><i class="ti ti-info-circle" style="color:#854F0B;font-size:14px;margin-top:1px;" aria-hidden="true"></i><div style="font-size:11px;color:var(--color-text-primary);line-height:1.5;"><span style="font-weight:500;">브랜드-경험 갭 확대</span> — K-BPI 상위권이나 KCSI 하락. 기대 대비 실제 경험 갭 +2.1점</div></div>
+  </div>
+</div>
+
+<!-- DRIVER -->
+<div class="panel" id="tab-driver">
+  <div class="g2">
+    <div class="card">
+      <div class="ct"><i class="ti ti-sort-descending" aria-hidden="true"></i> 드라이버 중요도 × 성과</div>
+      <div class="dr"><div class="dn2">제품 품질</div><div class="db"><div class="df" style="width:88%;background:#1568C8;"></div></div><div class="dv">88</div><span style="font-size:9px;color:#1568C8;width:36px;">중요↑↑</span></div>
+      <div class="dr"><div class="dn2">A/S 응대</div><div class="db"><div class="df" style="width:62%;background:#D85A30;"></div></div><div class="dv" style="color:#D85A30;">62</div><span style="font-size:9px;color:#D85A30;width:36px;">중요↑↑</span></div>
+      <div class="dr"><div class="dn2">가격 적정성</div><div class="db"><div class="df" style="width:71%;background:#888780;"></div></div><div class="dv">71</div><span style="font-size:9px;color:var(--color-text-secondary);width:36px;">중요↑</span></div>
+      <div class="dr"><div class="dn2">구매 편의성</div><div class="db"><div class="df" style="width:79%;background:#1568C8;"></div></div><div class="dv">79</div><span style="font-size:9px;color:var(--color-text-secondary);width:36px;">중요-</span></div>
+      <div class="dr"><div class="dn2">브랜드 신뢰</div><div class="db"><div class="df" style="width:84%;background:#1568C8;"></div></div><div class="dv">84</div><span style="font-size:9px;color:var(--color-text-secondary);width:36px;">중요-</span></div>
+      <div class="dr"><div class="dn2">앱/디지털</div><div class="db"><div class="df" style="width:55%;background:#D85A30;"></div></div><div class="dv" style="color:#D85A30;">55</div><span style="font-size:9px;color:#D85A30;width:36px;">중요↑</span></div>
+    </div>
+    <div class="card">
+      <div class="ct"><i class="ti ti-layout-grid" aria-hidden="true"></i> IPA 매트릭스</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+        <div style="padding:8px;background:#EAF3DE;border-radius:var(--border-radius-md);"><div style="font-size:10px;font-weight:500;color:#3B6D11;margin-bottom:3px;">집중 유지</div><div style="font-size:10px;color:var(--color-text-secondary);">제품 품질<br>브랜드 신뢰</div></div>
+        <div style="padding:8px;background:#EBF4FC;border-radius:var(--border-radius-md);"><div style="font-size:10px;font-weight:500;color:#185FA5;margin-bottom:3px;">즉시 개선</div><div style="font-size:10px;color:var(--color-text-secondary);">A/S 응대<br>앱/디지털</div></div>
+        <div style="padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);"><div style="font-size:10px;font-weight:500;color:var(--color-text-secondary);margin-bottom:3px;">낮은 우선순위</div><div style="font-size:10px;color:var(--color-text-secondary);">구매 편의성</div></div>
+        <div style="padding:8px;background:#FAEEDA;border-radius:var(--border-radius-md);"><div style="font-size:10px;font-weight:500;color:#854F0B;margin-bottom:3px;">과잉 투자</div><div style="font-size:10px;color:var(--color-text-secondary);">가격 적정성</div></div>
+      </div>
+      <div style="margin-top:8px;font-size:9px;color:var(--color-text-secondary);display:flex;justify-content:space-between;">
+        <span>← 낮은 성과</span><span>높은 성과 →</span>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct"><i class="ti ti-building-store" aria-hidden="true"></i> 경쟁사 드라이버 비교</div>
+    <div style="position:relative;height:130px;"><canvas id="c3" role="img" aria-label="드라이버별 자사 경쟁사 비교">제품품질, AS응대, 가격, 구매편의, 브랜드, 앱 비교</canvas></div>
+  </div>
+</div>
+
+<!-- SEGMENT -->
+<div class="panel" id="tab-seg">
+  <div class="mrow">
+    <div class="mc"><div class="ml">전체 이탈 위험</div><div class="mv" style="color:#D85A30;">18%</div><div class="ms dn">▲ 3%p</div></div>
+    <div class="mc"><div class="ml">즉시 개입 필요</div><div class="mv" style="color:#A32D2D;">7%</div><div class="ms" style="color:var(--color-text-secondary);">KNPS 0~3</div></div>
+    <div class="mc"><div class="ml">침묵형 고위험</div><div class="mv" style="color:#D85A30;">11%</div><div class="ms" style="color:var(--color-text-secondary);">불만 미표출</div></div>
+    <div class="mc"><div class="ml">이탈 임계 KCSI</div><div class="mv">72점</div><div class="ms" style="color:var(--color-text-secondary);">이하 시 급증</div></div>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="ct"><i class="ti ti-users" aria-hidden="true"></i> 세그먼트별 이탈 위험도</div>
+      <div class="sr"><div style="font-size:11px;color:var(--color-text-primary);">40대 남성 · 수도권</div><span class="sbh bh">위험 28%</span></div>
+      <div class="sr"><div style="font-size:11px;color:var(--color-text-primary);">30대 여성 · 온라인</div><span class="sbh bh">위험 24%</span></div>
+      <div class="sr"><div style="font-size:11px;color:var(--color-text-primary);">50대 이상 · 오프라인</div><span class="sbh bm">위험 15%</span></div>
+      <div class="sr"><div style="font-size:11px;color:var(--color-text-primary);">20대 · 앱 사용자</div><span class="sbh bm">위험 13%</span></div>
+      <div class="sr"><div style="font-size:11px;color:var(--color-text-primary);">30대 남성 · 고소득</div><span class="sbh bl">위험 6%</span></div>
+      <div class="sr"><div style="font-size:11px;color:var(--color-text-primary);">40대 여성 · 재구매</div><span class="sbh bl">위험 5%</span></div>
+    </div>
+    <div class="card">
+      <div class="ct"><i class="ti ti-chart-pie" aria-hidden="true"></i> 이탈 위험 유형</div>
+      <div style="position:relative;height:140px;"><canvas id="c4" role="img" aria-label="이탈 유형 도넛차트">침묵형41, SNS폭발형24, 즉각이탈21, 내부해결14</canvas></div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
+        <span style="display:flex;align-items:center;gap:3px;font-size:10px;color:var(--color-text-secondary);"><span style="width:8px;height:8px;border-radius:2px;background:#D85A30;"></span>침묵형 41%</span>
+        <span style="display:flex;align-items:center;gap:3px;font-size:10px;color:var(--color-text-secondary);"><span style="width:8px;height:8px;border-radius:2px;background:#1568C8;"></span>SNS폭발 24%</span>
+        <span style="display:flex;align-items:center;gap:3px;font-size:10px;color:var(--color-text-secondary);"><span style="width:8px;height:8px;border-radius:2px;background:#BA7517;"></span>즉각이탈 21%</span>
+        <span style="display:flex;align-items:center;gap:3px;font-size:10px;color:var(--color-text-secondary);"><span style="width:8px;height:8px;border-radius:2px;background:#888780;"></span>내부해결 14%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXEC -->
+<div class="panel" id="tab-exec">
+  <div class="g2">
+    <div class="card" style="text-align:center;">
+      <div class="ct" style="justify-content:center;"><i class="ti ti-activity" aria-hidden="true"></i> 통합 CX 건강도 지수 (HCI)</div>
+      <div style="font-size:44px;font-weight:500;color:#1568C8;line-height:1;">76.3</div>
+      <div style="font-size:10px;color:var(--color-text-secondary);margin-top:3px;">8개 조사 통합</div>
+      <div style="display:inline-block;background:#EBF4FC;color:#002467;font-size:10px;padding:3px 10px;border-radius:3px;margin-top:7px;">업종 내 3위 / 전년 ▲1.8점</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:10px;">
+        <div style="background:var(--color-background-secondary);padding:7px;border-radius:var(--border-radius-md);"><div style="font-size:9px;color:var(--color-text-secondary);">브랜드</div><div style="font-size:13px;font-weight:500;">82.1</div></div>
+        <div style="background:var(--color-background-secondary);padding:7px;border-radius:var(--border-radius-md);"><div style="font-size:9px;color:var(--color-text-secondary);">경험</div><div style="font-size:13px;font-weight:500;color:#D85A30;">71.4</div></div>
+        <div style="background:var(--color-background-secondary);padding:7px;border-radius:var(--border-radius-md);"><div style="font-size:9px;color:var(--color-text-secondary);">신뢰</div><div style="font-size:13px;font-weight:500;">78.9</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct"><i class="ti ti-shield-check" aria-hidden="true"></i> ESG 고객 지표</div>
+      <div class="rr"><div class="rl">KCSI (외부 공인)</div><div class="rv">78.4점</div></div>
+      <div class="rr"><div class="rl">KCPI 소비자 보호</div><div class="rv">81.2점</div></div>
+      <div class="rr"><div class="rl">업종 내 순위</div><div class="rv rh">상위 25%</div></div>
+      <div class="rr"><div class="rl">전년 대비 변화</div><div class="rv up">▲ 1.8점</div></div>
+      <div style="margin-top:8px;padding:6px 8px;background:#EAF3DE;border-radius:var(--border-radius-md);font-size:10px;color:#3B6D11;">ESG 보고서 직접 인용 가능 — 외부 공인 지표</div>
+    </div>
+  </div>
+  <div class="g3">
+    <div class="card"><div class="ct"><i class="ti ti-trending-up" aria-hidden="true"></i> 전략 우선순위</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="padding:6px 10px;background:#FCEBEB;border-left:3px solid #D85A30;font-size:11px;color:#A32D2D;font-weight:500;">1순위 A/S 응대 개선</div>
+        <div style="padding:6px 10px;background:#FAEEDA;border-left:3px solid #BA7517;font-size:11px;color:#854F0B;font-weight:500;">2순위 앱/디지털 개선</div>
+        <div style="padding:6px 10px;background:#EBF4FC;border-left:3px solid #1568C8;font-size:11px;color:#185FA5;font-weight:500;">3순위 40대 리텐션</div>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;"><div class="ct" style="justify-content:center;"><i class="ti ti-presentation" aria-hidden="true"></i> 이사회 보고 원 넘버</div>
+      <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:3px;">CX 투자 대비 매출 기여</div>
+      <div style="font-size:34px;font-weight:500;color:#1568C8;">3.2x</div>
+      <div style="font-size:10px;color:var(--color-text-secondary);margin-top:3px;">A/S 개선 투자 기준</div>
+    </div>
+    <div class="card"><div class="ct"><i class="ti ti-cash" aria-hidden="true"></i> 이탈 방지 추정 매출</div>
+      <div class="rr"><div class="rl">이탈률 감소</div><div class="rv rh">-2.1%p</div></div>
+      <div class="rr"><div class="rl">방지 고객 수</div><div class="rv">4,200명</div></div>
+      <div class="rr"><div class="rl">방지 매출</div><div class="rv rh">126억원</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ROI SIM — Module 4 -->
+<div class="panel" id="tab-roi">
+  <div class="g2">
+    <div class="card">
+      <div class="ct"><i class="ti ti-adjustments" aria-hidden="true"></i> What-if 시뮬레이터 — 속성 개선 시나리오</div>
+      <div class="sl">개선 폭 조정 → 우측에서 실시간 효과 확인</div>
+      <div class="slider-row">
+        <div class="slider-label">A/S 응대 개선</div>
+        <input type="range" min="0" max="5" value="2" step="1" id="sl1" oninput="calcROI()">
+        <div class="slider-val" id="sv1">+2점</div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">앱/디지털 개선</div>
+        <input type="range" min="0" max="5" value="1" step="1" id="sl2" oninput="calcROI()">
+        <div class="slider-val" id="sv2">+1점</div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">가격 적정성 개선</div>
+        <input type="range" min="0" max="5" value="0" step="1" id="sl3" oninput="calcROI()">
+        <div class="slider-val" id="sv3">+0점</div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">구매 편의성 개선</div>
+        <input type="range" min="0" max="5" value="0" step="1" id="sl4" oninput="calcROI()">
+        <div class="slider-val" id="sv4">+0점</div>
+      </div>
+      <div style="margin-top:8px;padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);">
+        <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:2px;">시나리오 선택</div>
+        <div style="display:flex;gap:6px;">
+          <button onclick="setScenario(2,1,0,0)" style="font-size:10px;padding:3px 8px;">보수적</button>
+          <button onclick="setScenario(3,2,1,0)" style="font-size:10px;padding:3px 8px;">기본</button>
+          <button onclick="setScenario(5,4,2,1)" style="font-size:10px;padding:3px 8px;">낙관적</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct"><i class="ti ti-chart-arrows" aria-hidden="true"></i> 예상 효과</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center;">
+          <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:3px;">KCSI 예상 상승</div>
+          <div class="result-big" id="r-kcsi">+1.6점</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center;">
+          <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:3px;">KNPS 예상 상승</div>
+          <div class="result-big" id="r-knps">+1.2점</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center;">
+          <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:3px;">이탈률 감소</div>
+          <div class="result-big" id="r-churn">-1.8%p</div>
+        </div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center;">
+          <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:3px;">방지 매출 추정</div>
+          <div class="result-big" id="r-rev">108억</div>
+        </div>
+      </div>
+      <div style="background:#EBF4FC;border-radius:var(--border-radius-md);padding:10px;text-align:center;">
+        <div style="font-size:10px;color:#0C447C;margin-bottom:2px;">투자 대비 ROI</div>
+        <div style="font-size:32px;font-weight:500;color:#1568C8;" id="r-roi">2.7x</div>
+      </div>
+      <div style="position:relative;height:100px;margin-top:10px;">
+        <canvas id="c5" role="img" aria-label="시나리오별 ROI 비교">보수적/기본/낙관적 ROI 비교</canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REPORT — Module 5 -->
+<div class="panel" id="tab-report">
+  <div class="g2">
+    <div>
+      <div class="card" style="margin-bottom:10px;">
+        <div class="ct"><i class="ti ti-robot" aria-hidden="true"></i> AI 자동 생성 리포트 <span class="new-badge">자동 업데이트</span></div>
+        <div class="report-card">
+          <div class="report-info">
+            <div class="report-icon"><i class="ti ti-presentation" aria-hidden="true"></i></div>
+            <div><div class="report-title">2024 연간 CX 성과 보고서</div><div class="report-sub">이사회 보고용 · 자동 생성 · 2025.01.15</div></div>
+          </div>
+          <button class="dl-btn"><i class="ti ti-download" aria-hidden="true"></i> 다운로드</button>
+        </div>
+        <div class="report-card">
+          <div class="report-info">
+            <div class="report-icon"><i class="ti ti-shield-check" aria-hidden="true"></i></div>
+            <div><div class="report-title">ESG 고객 항목 자동 작성본</div><div class="report-sub">ESG 보고서 직접 삽입 가능 · 외부 공인</div></div>
+          </div>
+          <button class="dl-btn"><i class="ti ti-download" aria-hidden="true"></i> 다운로드</button>
+        </div>
+        <div class="report-card">
+          <div class="report-info">
+            <div class="report-icon"><i class="ti ti-calendar" aria-hidden="true"></i></div>
+            <div><div class="report-title">2025년 1월 월간 브리핑</div><div class="report-sub">AI 자동 생성 · 이상 변동 포함</div></div>
+          </div>
+          <button class="dl-btn"><i class="ti ti-download" aria-hidden="true"></i> 다운로드</button>
+        </div>
+        <div class="report-card">
+          <div class="report-info">
+            <div class="report-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
+            <div><div class="report-title">사전 미팅 자료 — 2025 Q1 전략 회의</div><div class="report-sub">자동 생성 · 드라이버 요약 포함</div></div>
+          </div>
+          <button class="dl-btn"><i class="ti ti-download" aria-hidden="true"></i> 다운로드</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct"><i class="ti ti-eye" aria-hidden="true"></i> 월간 브리핑 미리보기</div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;">
+        <div style="font-size:11px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;">2025년 1월 CX 월간 브리핑</div>
+        <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:8px;">삼성전자 · 가전 업종 · KMAC 자동 생성</div>
+        <div style="font-size:10px;color:var(--color-text-primary);line-height:1.7;margin-bottom:8px;">
+          이번 달 KCSI는 <span style="color:#1568C8;font-weight:500;">78.4점</span>으로 전월 대비 0.3점 상승했습니다. 업종 내 순위는 <span style="font-weight:500;">3위</span>를 유지하고 있으나, KNPS는 72.1점으로 0.4점 하락해 만족-추천 전환 효율이 약화되는 추세입니다.
+        </div>
+        <div style="background:#FCEBEB;border-radius:var(--border-radius-md);padding:7px 9px;font-size:10px;color:#A32D2D;margin-bottom:6px;">
+          <span style="font-weight:500;">이상 감지</span> — A/S 응대 점수 62점, 전월 대비 -2.1점 하락. 즉시 개선 필요
+        </div>
+        <div style="font-size:10px;color:var(--color-text-secondary);">다음 달 주요 확인 사항: 40대 남성 세그먼트 이탈률 모니터링 · 앱 개선 효과 측정</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI RAG — Module 6 -->
+<div class="panel" id="tab-ai">
+  <div class="card" style="margin-bottom:10px;">
+    <div class="ct"><i class="ti ti-message-circle" aria-hidden="true"></i> AI 질의응답 — 데이터 기반 즉시 응답</div>
+    <div class="chip-row">
+      <div class="chip" onclick="askQ('경쟁사 대비 약점 3개 알려줘')">경쟁사 대비 약점 3개 ↗</div>
+      <div class="chip" onclick="askQ('이탈 위험 가장 높은 세그먼트는?')">이탈 위험 세그먼트 ↗</div>
+      <div class="chip" onclick="askQ('A/S 개선하면 매출 얼마나 늘어?')">A/S 개선 ROI ↗</div>
+      <div class="chip" onclick="askQ('업종 1위 기업과 차이가 뭐야?')">1위와의 차이 ↗</div>
+    </div>
+    <div class="chat-wrap" id="chatWrap">
+      <div class="chat-msg">
+        <div class="chat-sender">CX Intelligence AI</div>
+        <div class="chat-ai">안녕하세요. 삼성전자 가전 업종 CX 데이터를 기반으로 질문에 답변드립니다. 위 버튼을 클릭하거나 직접 질문해 주세요.</div>
+      </div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="질문을 입력하세요 (예: 경쟁사 대비 약점은?)" style="flex:1;font-size:11px;">
+      <button onclick="sendChat()" style="font-size:11px;padding:0 14px;">전송 ↗</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function sw(name){
+  const names=['home','driver','seg','exec','roi','report','ai'];
+  document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.remove('active');if(names[i]===name)t.classList.add('active');});
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+const isDark=matchMedia('(prefers-color-scheme: dark)').matches;
+const tc=isDark?'rgba(255,255,255,0.5)':'rgba(0,0,0,0.4)';
+const gc=isDark?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.05)';
+
+new Chart(document.getElementById('c1'),{type:'line',data:{labels:['2020','2021','2022','2023','2024'],datasets:[{label:'KCSI',data:[74.1,75.3,76.8,77.2,78.4],borderColor:'#1568C8',backgroundColor:'rgba(21,104,200,0.07)',tension:0.3,pointRadius:3,borderWidth:2},{label:'KNPS',data:[71.2,72.8,74.1,72.9,72.1],borderColor:'#888780',backgroundColor:'transparent',tension:0.3,pointRadius:3,borderDash:[4,3],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9},color:tc},grid:{color:gc}},y:{ticks:{font:{size:9},color:tc},grid:{color:gc},min:68,max:82}}}});
+
+new Chart(document.getElementById('c2'),{type:'bubble',data:{datasets:[{label:'자사',data:[{x:78.4,y:72.1,r:9}],backgroundColor:'rgba(21,104,200,0.75)'},{label:'경쟁사A',data:[{x:80.1,y:74.5,r:7}],backgroundColor:'rgba(136,135,128,0.6)'},{label:'경쟁사B',data:[{x:75.2,y:68.3,r:6}],backgroundColor:'rgba(211,209,199,0.8)'},{label:'경쟁사C',data:[{x:72.8,y:70.1,r:5}],backgroundColor:'rgba(216,90,48,0.5)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'KCSI',font:{size:9},color:tc},ticks:{font:{size:9},color:tc},grid:{color:gc},min:68,max:84},y:{title:{display:true,text:'KNPS',font:{size:9},color:tc},ticks:{font:{size:9},color:tc},grid:{color:gc},min:62,max:80}},layout:{padding:10}}});
+
+new Chart(document.getElementById('c3'),{type:'bar',data:{labels:['제품품질','A/S응대','가격','구매편의','브랜드','앱'],datasets:[{label:'자사',data:[88,62,71,79,84,55],backgroundColor:'rgba(21,104,200,0.8)'},{label:'경쟁사A',data:[85,78,74,81,80,72],backgroundColor:'rgba(136,135,128,0.55)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9},color:tc},grid:{color:gc}},y:{ticks:{font:{size:9},color:tc},grid:{color:gc},min:40,max:100}}}});
+
+new Chart(document.getElementById('c4'),{type:'doughnut',data:{labels:['침묵형','SNS폭발','즉각이탈','내부해결'],datasets:[{data:[41,24,21,14],backgroundColor:['#D85A30','#1568C8','#BA7517','#888780'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}});
+
+let roiChart=null;
+function calcROI(){
+  const v1=parseInt(document.getElementById('sl1').value);
+  const v2=parseInt(document.getElementById('sl2').value);
+  const v3=parseInt(document.getElementById('sl3').value);
+  const v4=parseInt(document.getElementById('sl4').value);
+  document.getElementById('sv1').textContent='+'+v1+'점';
+  document.getElementById('sv2').textContent='+'+v2+'점';
+  document.getElementById('sv3').textContent='+'+v3+'점';
+  document.getElementById('sv4').textContent='+'+v4+'점';
+  const total=v1*0.35+v2*0.2+v3*0.1+v4*0.08;
+  const kcsi=(total*0.8).toFixed(1);
+  const knps=(total*0.6).toFixed(1);
+  const churn=(total*0.9).toFixed(1);
+  const rev=Math.round(total*54);
+  const roi=(total>0?Math.round((rev/40)*10)/10:0);
+  document.getElementById('r-kcsi').textContent='+'+kcsi+'점';
+  document.getElementById('r-knps').textContent='+'+knps+'점';
+  document.getElementById('r-churn').textContent='-'+churn+'%p';
+  document.getElementById('r-rev').textContent=rev+'억';
+  document.getElementById('r-roi').textContent=(roi>0?roi.toFixed(1):'0')+'x';
+  const rData=[Math.round(total*0.6*54),Math.round(total*54),Math.round(total*1.4*54)];
+  if(roiChart){roiChart.data.datasets[0].data=rData;roiChart.update();}
+}
+
+function setScenario(a,b,c,d){
+  document.getElementById('sl1').value=a;
+  document.getElementById('sl2').value=b;
+  document.getElementById('sl3').value=c;
+  document.getElementById('sl4').value=d;
+  calcROI();
+}
+
+roiChart=new Chart(document.getElementById('c5'),{type:'bar',data:{labels:['보수적','기본','낙관적'],datasets:[{label:'방지 매출(억)',data:[65,108,180],backgroundColor:['rgba(136,135,128,0.6)','rgba(21,104,200,0.8)','rgba(0,100,160,0.8)']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9},color:tc},grid:{color:gc}},y:{ticks:{font:{size:9},color:tc},grid:{color:gc}}}}});
+
+const aiAnswers={
+  '경쟁사 대비 약점 3개 알려줘':'KCSI 데이터 분석 결과, 경쟁사 대비 주요 약점은 3가지입니다.\n\n① A/S 응대 (62점) — 경쟁사 A 대비 16점 낮음. 업종 내 가장 큰 드라이버 격차.\n② 앱/디지털 경험 (55점) — 30대 이하 세그먼트에서 이탈 주요 원인으로 작용.\n③ 만족→추천 전환율 — KCSI 대비 KNPS 갭이 경쟁사 A보다 2.1점 큼. 락인 고객 비중 높음.',
+  '이탈 위험 가장 높은 세그먼트는?':'KNPS 데이터 기반 세그먼트 분석 결과:\n\n1위 — 40대 남성·수도권 (이탈 위험 28%)\n→ A/S 불만 집중, 3개 지수 동시 하락 패턴 감지\n\n2위 — 30대 여성·온라인 (이탈 위험 24%)\n→ 앱/디지털 불편, SNS 폭발형 불만 유형 비중 높음\n\n즉시 개입 권장 세그먼트입니다.',
+  'A/S 개선하면 매출 얼마나 늘어?':'A/S 응대 2점 개선 시나리오 (회귀계수 기반):\n\nKCSI 예상 상승 +1.6점 → 이탈률 감소 -1.8%p\n이탈 방지 고객 수 약 3,800명\n방지 매출 추정 약 108억원\nROI 2.7배 (투자 대비)\n\n※ APRU 30만원/년, 드라이버 계수 0.28 적용',
+  '업종 1위 기업과 차이가 뭐야?':'KCSI × KNPS 통합 분석 결과:\n\n1위 기업 (LG전자, KCSI 82.1점) 대비:\n• A/S 응대 갭 -14점 (가장 큰 격차)\n• 만족→추천 전환율 3.2%p 낮음\n• 앱/디지털 갭 -18점\n\n핵심 차이 — 1위 기업은 A/S와 디지털에서 압도적. 제품 품질은 우리가 3점 높음.',
+};
+
+function addMsg(sender,text,isUser){
+  const wrap=document.getElementById('chatWrap');
+  const div=document.createElement('div');
+  div.className='chat-msg';
+  div.style.marginBottom='10px';
+  if(isUser){
+    div.innerHTML='<div style="text-align:right;margin-bottom:3px;font-size:10px;color:var(--color-text-secondary);">나</div><div class="chat-user">'+text+'</div>';
+  }else{
+    const formatted=text.replace(/\n/g,'<br>');
+    div.innerHTML='<div class="chat-sender">CX Intelligence AI</div><div class="chat-ai">'+formatted+'</div>';
+  }
+  wrap.appendChild(div);
+  wrap.scrollTop=wrap.scrollHeight;
+}
+
+function askQ(q){
+  document.getElementById('chatInput').value=q;
+  sendChat();
+}
+
+function sendChat(){
+  const input=document.getElementById('chatInput');
+  const q=input.value.trim();
+  if(!q)return;
+  addMsg('나',q,true);
+  input.value='';
+  setTimeout(()=>{
+    const ans=aiAnswers[q]||'해당 질문에 대한 분석 결과를 데이터베이스에서 검색 중입니다. KCSI·KNPS·KSQI 데이터를 기반으로 답변드리겠습니다.\n\n현재 데이터 기준으로는 추가 분석이 필요한 질문입니다. 위 예시 질문 버튼을 활용해 보세요.';
+    addMsg('AI',ans,false);
+  },600);
+}
+</script>
